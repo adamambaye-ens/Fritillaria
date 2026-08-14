@@ -126,11 +126,3 @@ setup, or simply a conservative guess rather than a measurement. Treat
 "tens of minutes, not hours" as the figure backed by an actual run on
 this hardware, and re-measure on your own machine before relying on
 either number for planning.
-
-## License
-
-[TODO -- final choice pending.]
-
-## Citation
-
-[TODO]

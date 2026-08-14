@@ -1,0 +1,11 @@
+# Core requirement for all five scripts.
+numpy>=1.24
+matplotlib>=3.7
+
+# Optional: JIT acceleration of the Gray-Scott loop. Actively used by
+# fashion_model_animation.py; imported but currently unused by the other
+# four scripts. Safe to omit -- everything falls back to plain NumPy.
+numba>=0.58
+
+# Not a Python package: fashion_model_animation.py also requires the
+# ffmpeg binary on PATH (used by matplotlib.animation.FFMpegWriter).

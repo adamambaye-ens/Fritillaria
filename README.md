@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1334585164.svg)](https://doi.org/10.5281/zenodo.21957429)
+
 # FASHION: fritillary checkerboard patterning model
 
 Simulation code accompanying the manuscript *"Tricking Turing: How to

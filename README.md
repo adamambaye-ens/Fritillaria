@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/1334585164.svg)](https://doi.org/10.5281/zenodo.21944388)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21944388.svg)](https://doi.org/10.5281/zenodo.21944388)
 
 # FASHION: fritillary checkerboard patterning model
 

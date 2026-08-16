@@ -19,7 +19,7 @@ fresh Python environment, with no other files or prior steps required.
 
 ## Contents
 
-### Classroom scripts (fast, 7 veins, minutes to run)
+### The three fast scripts (7 veins, minutes to run)
 
 - **`turing_pattern_vein_free.py`** -- classical Gray-Scott Turing-pattern
   simulator (vein-free). Shows what the reaction-diffusion pattern looks
@@ -37,7 +37,7 @@ fresh Python environment, with no other files or prior steps required.
   transition showing the activation threshold, colorant diffusion, and
   the Hill bistability interpolation), and encodes it as an .mp4.
 
-### Large-domain variants (15 veins, hours to run)
+### Large-domain variants (15 veins, tens of minutes to run)
 
 - **`turing_pattern_vein_free_extended.py`** -- same vein-free control as
   `turing_pattern_vein_free.py`, on the larger 15-vein domain.
@@ -46,15 +46,13 @@ fresh Python environment, with no other files or prior steps required.
   `fashion_model.py`, on the larger 15-vein domain used for the paper's
   quantitative Square Index / Checkerboard Score statistics. Its
   docstring documents, in detail, every parameter that had to be
-  re-tuned to scale the model up from 7 to 15 veins (seeding, per
-  -compartment source threshold, vein strength, colorant anisotropy) and
-  why -- worth reading even if you only run the classroom version.
+  re-tuned to scale the model up from 7 to 15 veins (seeding,
+  per-compartment source threshold, vein strength, colorant anisotropy)
+  and why -- worth reading even if you only run the fast version.
 
-These two are **not** meant for a live classroom demo -- see measured
-runtimes below. They are included for full transparency and
-reproducibility of the paper's quantitative results, not for the
-"three scripts for classroom reuse" claim in the manuscript's Data
-Availability statement, which refers to the three fast scripts above.
+These two are **not** meant for live classroom use -- see measured
+runtimes below. They're included for full transparency and
+reproducibility of the paper's quantitative results, not for teaching.
 
 ## Dependencies
 
@@ -64,17 +62,23 @@ dependency in any of these five scripts).
 - `numpy`
 - `matplotlib` (3D surface plots use `mpl_toolkits.mplot3d`, bundled
   with Matplotlib)
-- `numba` (**optional**) -- JIT-accelerates the Gray-Scott loop.
-  `fashion_model_animation.py` uses it directly (`@njit` on the per-step
-  update); it falls back automatically to plain NumPy if Numba is not
-  installed, just slower. The four other scripts import Numba the same
-  way but do not currently apply `@njit` to any function, so installing
-  it has no effect on those.
+- `numba` (**optional**) -- relevant only to `fashion_model.py`,
+  `fashion_model_extended.py`, and `fashion_model_animation.py`, which
+  try to import it and fall back to plain NumPy if it isn't installed.
+  Of these three, only `fashion_model_animation.py` actually applies
+  `@njit` to accelerate its Gray-Scott loop; in the other two the import
+  is present but unused, so installing Numba has no effect on them.
+  `turing_pattern_vein_free.py` and `turing_pattern_vein_free_extended.py`
+  don't reference Numba at all -- plain NumPy only.
 - **`ffmpeg`** (system binary, not a Python package) -- required only by
   `fashion_model_animation.py`, via Matplotlib's `FFMpegWriter`. Must be
   on `PATH`. Not needed by the other four scripts.
 
-See `requirements.txt` for pinned versions of the Python packages.
+Install with:
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Running
 
@@ -84,8 +88,8 @@ Each script is standalone:
 python turing_pattern_vein_free.py
 python fashion_model.py
 python fashion_model_animation.py
-python turing_pattern_vein_free_extended.py   # several hours
-python fashion_model_extended.py              # several hours
+python turing_pattern_vein_free_extended.py   # ~30 min
+python fashion_model_extended.py              # ~27 min
 ```
 
 All five generate their own initial conditions and run their own
@@ -99,8 +103,9 @@ e.g. `MPLBACKEND=Agg`.
 ## Measured runtimes
 
 Measured on an ordinary laptop (not a workstation), with Numba
-installed, single run each, no other heavy process competing for CPU
-(classroom scripts) / see note below (extended scripts):
+installed. The three fast scripts were each timed alone, with no other
+heavy process competing for CPU; see the note below for the two
+extended scripts.
 
 | Script | Measured runtime |
 |---|---|
@@ -110,21 +115,22 @@ installed, single run each, no other heavy process competing for CPU
 | `fashion_model_extended.py` | ~27 min |
 | `turing_pattern_vein_free_extended.py` | ~30 min |
 
-The three classroom scripts comfortably fit inside a single class
-session, including live re-runs with changed parameters. Without Numba,
-expect the non-animated classroom scripts to run somewhat slower (their
-Gray-Scott loop is plain NumPy in that case) -- note that Numba is
-currently inert for four of the five scripts regardless (see
-Dependencies above), so this mainly affects `fashion_model_animation.py`.
+The three fast scripts comfortably fit inside a single class session,
+including live re-runs with changed parameters. Without Numba, expect
+`fashion_model_animation.py` to run slower (its Gray-Scott loop is
+Numba-accelerated when available); the other four scripts are plain
+NumPy either way (see Dependencies above).
 
-The two extended scripts were run concurrently with each other (roughly
-half of each run overlapped with the other), so each figure includes
-some mutual CPU contention; running either one fully alone would likely
-be a bit faster still. Both figures are well under the "~3h each"
-estimate previously noted in this project's internal pipeline-
-orchestration script -- that estimate was not independently reproduced
-here and may have reflected a slower machine, a different Numba/BLAS
-setup, or simply a conservative guess rather than a measurement. Treat
-"tens of minutes, not hours" as the figure backed by an actual run on
-this hardware, and re-measure on your own machine before relying on
-either number for planning.
+The two extended scripts were run concurrently with each other, so each
+figure includes some mutual CPU contention -- running either one alone
+would likely be a bit faster.
+
+## License
+
+MIT (see `LICENSE`).
+
+## Citation
+
+If you use this code, please cite:
+
+Primel, J., Lefebvre, P., Mbaye, A. (2026). *Tricking Turing: How to Build a Geometric Checkerboard on Living Tissue [Simulation Code]*. Zenodo. https://doi.org/10.5281/zenodo.21944387
